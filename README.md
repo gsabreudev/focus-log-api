@@ -215,7 +215,7 @@ Gabriela — [LinkedIn](https://www.linkedin.com/in/abreugs/)
 SQLite é um banco de dados que fica salvo num arquivo no próprio computador, sem precisar instalar nada. PostgreSQL é mais robusto, usado em produção com muitos usuários. Como esse projeto é um desafio técnico simples, o SQLite é suficiente e mais fácil de rodar localmente.
 
 ### O que é um endpoint POST?
-Endpoint é um endereço da API. O POST é usado quando você quer enviar dados — no nosso caso, enviar os dados de uma sessão de trabalho. Já o GET é usado quando você quer buscar dados — no nosso caso, buscar o diagnóstico.
+Endpoint é um endereço da API. O POST é usado quando você quer enviar dados no nosso caso, enviar os dados de uma sessão de trabalho. Já o GET é usado quando você quer buscar dados no nosso caso, buscar o diagnóstico.
 
 ### O que faz o arquivo services.py?
 É onde fica a lógica do negócio. Por exemplo, o cálculo da média de foco, a soma do tempo total e a geração do feedback automático ficam todos lá. A ideia é separar a lógica das rotas pra o código ficar mais organizado e fácil de testar.
