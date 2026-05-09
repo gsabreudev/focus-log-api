@@ -1,187 +1,183 @@
-# 🧠 Focus Log API
+# Focus Log API
 
-> API de registro e diagnóstico inteligente de produtividade — Desafio Técnico
+API para registrar sessões de trabalho e receber um diagnóstico automático sobre sua produtividade.
 
 ---
 
-## 📌 Sobre o Projeto
+## O que é isso?
 
-A **Focus Log API** permite registrar sessões de trabalho/estudo com métricas de foco e, ao final, receber um **diagnóstico inteligente** sobre o seu período de trabalho.
+Sabe quando você trabalha o dia inteiro mas sente que não produziu nada? Essa API resolve esse problema.
 
-### Stack utilizada
+Você registra cada bloco de trabalho informando quanto tempo trabalhou, o quanto estava concentrado e o que fez. No final, a API analisa todos os registros e te diz como foi sua produtividade — com uma mensagem de feedback personalizada.
 
-| Componente | Tecnologia |
+---
+
+## Como funciona na prática?
+
+1. Você terminou uma sessão de trabalho de 45 minutos codando? Registra.
+2. Ficou 30 minutos em reunião mas com a cabeça em outro lugar? Registra.
+3. Quer saber como foi seu dia? Chama o diagnóstico.
+
+A API calcula sua média de foco, tempo total trabalhado e te diz se você está em modo de alta performance ou se precisa rever sua rotina.
+
+---
+
+## Tecnologias utilizadas
+
+| O que faz | Tecnologia |
 |---|---|
-| Linguagem | Python 3.11+ |
-| Framework | FastAPI |
-| Banco de dados | SQLite (via SQLAlchemy ORM) |
-| Validação | Pydantic v2 |
+| Linguagem de programação | Python 3.11+ |
+| Framework web | FastAPI |
+| Banco de dados | SQLite |
+| Validação de dados | Pydantic |
 | Servidor | Uvicorn |
 
 ---
 
-## 🚀 Como rodar o projeto
+## Como rodar o projeto
 
 ### Pré-requisitos
 
-- Python 3.11 ou superior
-- `pip` atualizado
+- Python 3.11 ou superior instalado na máquina
+- Terminal (Prompt de Comando, PowerShell ou Terminal do VS Code)
 
-### 1. Clone o repositório
+### Passo a passo
+
+**1. Clone o repositório**
 
 ```bash
-git clone https://github.com/SEU_USUARIO/focus-log-api.git
+git clone https://github.com/gsabreudev/focus-log-api.git
 cd focus-log-api
 ```
 
-### 2. Crie e ative o ambiente virtual
+**2. Crie o ambiente virtual**
 
 ```bash
-# Criar
 python -m venv venv
+```
 
-# Ativar — Linux/macOS
-source venv/bin/activate
+**3. Ative o ambiente virtual**
 
-# Ativar — Windows
+Windows:
+```bash
 venv\Scripts\activate
 ```
 
-### 3. Instale as dependências
+Linux/macOS:
+```bash
+source venv/bin/activate
+```
+
+**4. Instale as dependências**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Suba o servidor
+**5. Suba o servidor**
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-A API estará disponível em: **http://localhost:8000**
+**6. Acesse a documentação interativa**
+
+Abra o navegador em: http://localhost:8000/docs
+
+Lá você consegue testar todos os endpoints visualmente, sem precisar de nenhuma ferramenta extra.
 
 ---
 
-## 📖 Documentação interativa
+## Endpoints
 
-Após subir o servidor, acesse:
+### Registrar uma sessão de trabalho
 
-- **Swagger UI:** http://localhost:8000/docs
-- **ReDoc:** http://localhost:8000/redoc
+**POST** `/registro-foco`
 
----
-
-## 🛣 Endpoints
-
-### `POST /registro-foco`
-
-Registra uma sessão de trabalho recém-encerrada.
-
-**Request body:**
+Você envia os dados de uma sessão que acabou de terminar.
 
 ```json
 {
   "nivel_foco": 4,
-  "tempo_minutos": 50,
+  "tempo_minutos": 45,
   "comentario": "Implementei o endpoint de diagnóstico sem interrupções",
   "categoria": "coding",
-  "tags": ["fastapi", "backend", "desafio"]
+  "tags": ["fastapi", "backend"]
 }
 ```
 
-| Campo | Tipo | Obrigatório | Descrição |
+| Campo | Tipo | Obrigatorio | Descricao |
 |---|---|---|---|
-| `nivel_foco` | `int` | ✅ | Nível de 1 (distraído) a 5 (flow) |
-| `tempo_minutos` | `int` | ✅ | Duração da sessão em minutos (> 0) |
-| `comentario` | `string` | ✅ | O que foi feito ou o que causou distração |
-| `categoria` | `string` | ❌ | coding / reunião / estudo / leitura / geral |
-| `tags` | `list[string]` | ❌ | Palavras-chave da sessão |
+| nivel_foco | numero | sim | De 1 (muito distraido) a 5 (concentracao total) |
+| tempo_minutos | numero | sim | Quanto tempo durou a sessao |
+| comentario | texto | sim | O que voce fez ou o que te distraiu |
+| categoria | texto | nao | coding, reuniao, estudo, leitura ou geral |
+| tags | lista | nao | Palavras-chave da sessao |
 
-**Response `201`:**
+Resposta:
 
 ```json
 {
   "id": 1,
   "nivel_foco": 4,
-  "tempo_minutos": 50,
+  "tempo_minutos": 45,
   "comentario": "Implementei o endpoint de diagnóstico sem interrupções",
   "categoria": "coding",
-  "tags": ["fastapi", "backend", "desafio"],
-  "criado_em": "2025-01-20T14:30:00Z"
+  "tags": ["fastapi", "backend"],
+  "criado_em": "2026-05-09T13:06:31"
 }
 ```
 
 ---
 
-### `GET /diagnostico-produtividade`
+### Ver o diagnóstico de produtividade
 
-Retorna o diagnóstico completo com base em todos os registros.
+**GET** `/diagnostico-produtividade`
 
-**Response `200`:**
+Analisa todos os registros e retorna um resumo completo do seu período de trabalho.
 
 ```json
 {
-  "total_registros": 5,
+  "total_registros": 3,
   "media_foco": 3.8,
-  "tempo_total_minutos": 210,
-  "tempo_total_horas": 3.5,
+  "tempo_total_minutos": 120,
+  "tempo_total_horas": 2.0,
   "categoria_mais_frequente": "coding",
   "distribuicao_categorias": {
-    "coding": 3,
-    "reunião": 1,
-    "estudo": 1
+    "coding": 2,
+    "reuniao": 1
   },
   "sessao_mais_produtiva": { ... },
   "feedback": "Você está com um ótimo ritmo de foco! Continue protegendo seus blocos de trabalho profundo.",
-  "nivel_energia": "🟢 Bom"
+  "nivel_energia": "Bom"
 }
 ```
 
----
+O campo `feedback` muda de acordo com sua média de foco:
 
-## 🎨 Diferenciais implementados
-
-- ✅ **Campo `categoria`** — classifica o tipo de atividade da sessão
-- ✅ **Campo `tags`** — permite etiquetar sessões com palavras-chave
-- ✅ **Timestamp automático** — `criado_em` registra quando a sessão foi salva
-- ✅ **Sessão mais produtiva** — identifica o melhor bloco do período
-- ✅ **Distribuição por categoria** — mostra onde você passa mais tempo
-- ✅ **Feedback em 5 níveis** — de "Crítico" a "Flow total 🚀"
-- ✅ **Documentação automática** — Swagger e ReDoc disponíveis
-- ✅ **Tratamento de erros** — validações com mensagens claras
+| Media de foco | Mensagem |
+|---|---|
+| Abaixo de 2 | Sugere eliminar distrações e trabalhar em blocos menores |
+| Entre 2 e 3 | Sugere pausas mais longas e revisão de prioridades |
+| Entre 3 e 4 | Aponta o que diferencia suas boas sessões das ruins |
+| Entre 4 e 4.5 | Parabeniza e incentiva manter o ritmo |
+| Acima de 4.5 | Reconhece estado de alta performance |
 
 ---
 
-## 🧪 Testando com curl
-
-```bash
-# Criar um registro
-curl -X POST http://localhost:8000/registro-foco \
-  -H "Content-Type: application/json" \
-  -d '{"nivel_foco": 5, "tempo_minutos": 90, "comentario": "Deep work total", "categoria": "coding"}'
-
-# Ver o diagnóstico
-curl http://localhost:8000/diagnostico-produtividade
-```
-
----
-
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```
 focus-log-api/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py          # Configuração da aplicação e middlewares
-│   ├── database.py      # Conexão SQLite e session factory
-│   ├── models.py        # Modelos ORM (SQLAlchemy)
-│   ├── schemas.py       # Schemas de validação (Pydantic)
-│   ├── services.py      # Lógica de negócio e diagnóstico
+│   ├── main.py          # Configuracao da API
+│   ├── database.py      # Conexao com o banco de dados
+│   ├── models.py        # Estrutura dos dados no banco
+│   ├── schemas.py       # Validacao dos dados de entrada e saida
+│   ├── services.py      # Logica de negocio e calculo do diagnostico
 │   └── routes/
-│       ├── __init__.py
-│       ├── registro.py  # POST /registro-foco
-│       └── diagnostico.py # GET /diagnostico-produtividade
+│       ├── registro.py      # Endpoint de registro de sessao
+│       └── diagnostico.py   # Endpoint de diagnostico
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -189,15 +185,12 @@ focus-log-api/
 
 ---
 
-## 🤖 Uso de IA
+## Uso de Inteligência Artificial
 
-Este projeto foi desenvolvido com auxílio do **Claude (Anthropic)** para:
-- Geração da estrutura inicial do projeto
-- Sugestões de boas práticas FastAPI/SQLAlchemy
-- Redação dos docstrings e README
-
-Todo o código foi revisado, entendido e adaptado pelo desenvolvedor.
+Este projeto foi desenvolvido com auxílio do Claude (Anthropic) para geração da estrutura inicial, sugestões de boas práticas e redação da documentação. Todo o código foi revisado e compreendido pelo desenvolvedor antes de ser submetido.
 
 ---
 
-*Desenvolvido para o Desafio Técnico — Focus Log API*
+## Autor
+
+Gabriela — [LinkedIn](https://www.linkedin.com/in/gsabreudev)
