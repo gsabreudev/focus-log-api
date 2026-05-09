@@ -193,4 +193,4 @@ Este projeto foi desenvolvido com auxílio do Claude (Anthropic) para geração 
 
 ## Autor
 
-Gabriela — [LinkedIn](https://www.linkedin.com/in/gsabreudev)
+Gabriela — [LinkedIn](https://www.linkedin.com/in/abreugs/)
