@@ -185,7 +185,7 @@ focus-log-api/
 ## A API em funcionamento
 
 Visão geral dos endpoints disponíveis:
-![Endpoints da API](Tela1.1.PNG)
+![Endpoints da API](Tela_1_1.PNG)
 
 Registrando uma sessão de trabalho com nivel de foco 4:
 ![Registro de sessão](ex1.PNG)
