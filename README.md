@@ -182,7 +182,16 @@ focus-log-api/
 ├── .gitignore
 └── README.md
 ```
+## A API em funcionamento
 
+Visão geral dos endpoints disponíveis:
+![Endpoints da API](Tela1.1.PNG)
+
+Registrando uma sessão de trabalho com nivel de foco 4:
+![Registro de sessão](ex1.PNG)
+
+Diagnóstico gerado automaticamente com feedback e nivel de energia:
+![Diagnóstico de produtividade](ex2.PNG)
 ---
 
 ## Uso de Inteligência Artificial
